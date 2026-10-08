@@ -1,0 +1,12 @@
+file,rows,date_col,first_date,last_date,freq_guess,max_gap_days,id_col,n_ids,ids_preview,dup_rows,possible_1000_row_cap,numeric_cols,missing_pct,worst_missing_col,columns,error
+banking sector index.csv,182.0,Date,2025-09-30,2026-06-29,daily,5.0,Security,1.0,Banking Sector Index,0.0,False,0.0,0.0,Date,Date | Security | Price (KES) | Volume | Net Foreign Flow | Change %,
+Central bank rate.csv,66.0,Date,2021-01-01,2026-06-01,monthly,31.0,Debt_type,1.0,Central Bank Rate,0.0,False,0.0,0.0,Date,Date | Debt_type | Value (%) | Source,
+core inflation data.csv,131.0,Date,2015-08-01,2026-06-29,monthly,48.0,Category,1.0,Core Inflation,0.0,False,0.0,0.0,Date,Date | Category | Rate (%) | Source,
+Equity prices data.csv,,,,,,,,,,,,,,,,skipped: use load_equities.py (malformed flow column)
+exchange_rates.csv,1000.0,Date,2023-02-17,2026-06-25,daily,5.0,Currency_pair,1.0,USD/KES,0.0,True,1.0,0.0,Date,Date | Currency_pair | Exchange Rate | Source,
+head inflation data.csv,132.0,Date,2015-07-01,2026-06-29,monthly,48.0,Category,1.0,Headline Inflation,0.0,False,0.0,0.0,Date,Date | Category | Rate (%) | Source,
+liquidity_indicators.csv,1000.0,Date,2025-06-24,2026-06-25,daily,5.0,Indicator,4.0,"Daily Volumes (KES Mn), Daily Average Interbank Rate, Upper Corridor Limit, Lower Corridor Limit",0.0,True,1.0,0.0,Date,Date | Indicator | Value | Source,
+nse 20 index.csv,2360.0,Date,2017-01-03,2026-06-29,daily,6.0,Security,1.0,NSE 20 Index,0.0,False,0.0,0.0,Date,Date | Security | Price (KES) | Volume | Net Foreign Flow | Change %,
+public_debt.csv,604.0,Date,1999-09-01,2025-04-01,monthly,92.0,Debt_type,2.0,"External Debt, Domestic Debt",0.0,False,0.0,0.0,Date,Date | Debt_type | Amount (KES) | Source,
+treasury_bills.csv,1768.0,Date,2015-01-12,2026-06-15,weekly,9.0,Tenor,3.0,"91-Day, 364-Day, 182-Day",0.0,False,0.0,0.0,Date,Date | Tenor | Rate (%) | Source,
+yield_curve.csv,32.0,Yield (%),1970-01-01,1970-01-01,daily,0.0,,,,2.0,False,1.0,0.0,Maturity,Maturity | Yield (%) | Source,
