@@ -1,0 +1,113 @@
+nse_20_index.csv: 2360 rows read, 0 dropped (unparseable dates)
+NSE 20: 2357 weekday rows (2017-01-03 -> 2026-06-29), 3 weekend rows dropped
+Weekly bank base: 460 weeks; weekday of period_end: {4: 460} (4 = Friday)
+treasury_bills.csv: 1768 rows read, 0 dropped (unparseable dates)
+T-bill tenor labels: ['182-Day', '364-Day', '91-Day']
+91-day rows: 597; stamped off-Monday: 2; two rows in one week (kept the Monday one): 1; missing rates: 0
+
+==================== H2 weekly ====================
+  rows with missing flow_ratio: 0
+  rows with missing dy91_lag1: 0
+  rows with missing nse20_ret_pct: 0
+FINAL: 460 rows, 2017-09-08 -> 2026-06-26
+Gaps between consecutive rows > 10 days: 0
+Split check: part 1 = 230 rows, part 2 = 230 rows (part 2 starts 2022-02-04)
+Rows per year: {2017: 17, 2018: 52, 2019: 52, 2020: 52, 2021: 53, 2022: 52, 2023: 52, 2024: 52, 2025: 52, 2026: 26}
+SPOT CHECK H2 weekly: 5 random rows (verify by hand against the raw files)
+period_end week_monday  y91_t1  y91_t2  dy91_lag1  nse20_ret_pct  flow_ratio
+2020-01-24  2020-01-20    7.20    7.20       0.00      -0.997703    0.002387
+2018-04-06  2018-04-02    8.00    8.02      -0.02      -0.637915    0.066529
+2021-07-02  2021-06-28    7.00    7.10      -0.10       1.543355    0.234830
+2026-02-06  2026-02-02    7.73    7.70       0.03       1.462440    0.093381
+2020-08-21  2020-08-17    6.12    6.12       0.00      -1.125271   -0.139153
+Saved C:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H2_weekly.csv
+Monthly equal-weighted bank return: min -0.1889, max 0.2887, mean 0.0116 (decimal: 0.05 = 5%)
+head inflation data.csv: 132 rows read, 0 dropped (unparseable dates)
+core inflation data.csv: 131 rows read, 0 dropped (unparseable dates)
+Headline inflation: 2015-07-01 -> 2026-06-29, stamp day-of-month most common: {1: 51, 19: 28, 31: 28, 30: 16}
+Headline inflation: missing months since 2017-01: 0  []
+Core inflation: 2015-08-01 -> 2026-06-29, stamp day-of-month most common: {1: 50, 19: 28, 31: 28, 30: 16}
+Core inflation: missing months since 2017-01: 0  []
+
+==================== H3 monthly ====================
+  rows with missing bank_ret: 0
+  rows with missing dinfl_head_lag1: 0
+  rows with missing nse20_ret_pct: 0
+FINAL: 106 rows, 2017-09-30 -> 2026-06-30
+Gaps between consecutive rows > 35 days: 0
+Split check: part 1 = 53 rows, part 2 = 53 rows (part 2 starts 2022-02-28)
+Rows per year: {2017: 4, 2018: 12, 2019: 12, 2020: 12, 2021: 12, 2022: 12, 2023: 12, 2024: 12, 2025: 12, 2026: 6}
+SPOT CHECK H3 monthly: 5 random rows (verify by hand against the raw files)
+period_end  infl_head_t1  infl_head_t2  dinfl_head_lag1  dinfl_core_lag1  nse20_ret_pct  bank_ret
+2026-01-31          4.50          4.50             0.00             -0.3       5.099723  0.077472
+2018-07-31          4.28          3.95             0.33             -0.3       0.333259  0.006036
+2018-01-31          4.50          4.73            -0.23              0.4       0.682392  0.081133
+2024-06-30          5.10          5.00             0.10             -0.9      -3.831082 -0.042440
+2025-10-31          4.60          4.50             0.10             -0.1       4.845861  0.111105
+Saved C:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H3_monthly.csv
+Weekly bank base: 460 weeks; weekday of period_end: {4: 460} (4 = Friday)
+exchange_rates.csv: 1000 rows read, 0 dropped (unparseable dates)
+FX weekday counts (0=Mon ... 6=Sun): {0: 174, 1: 175, 2: 174, 3: 171, 4: 145, 6: 161}  -> weekend rows are dropped
+USD/KES: 839 weekday rows, 2023-02-17 -> 2026-06-25, range 125.63 - 161.36, peak 161.36 on 2024-01-22
+
+==================== H1 weekly ====================
+  rows with missing flow_ratio: 0
+  rows with missing dfx_lag1_pct: 286
+  rows with missing nse20_ret_pct: 0
+FINAL: 174 rows, 2023-03-03 -> 2026-06-26
+Gaps between consecutive rows > 10 days: 0
+Split check: part 1 = 47 rows, part 2 = 127 rows (part 2 starts 2024-01-26)
+Rows per year: {2023: 44, 2024: 52, 2025: 52, 2026: 26}
+SPOT CHECK H1 weekly: 5 random rows (verify by hand against the raw files)
+period_end   fx_end  fx_chg_pct  dfx_lag1_pct  nse20_ret_pct  flow_ratio
+2026-02-20 129.0200    0.000000      0.000000      -0.290658   -0.153881
+2025-12-05 129.3095   -0.392776     -0.038654      -2.342821    0.304965
+2025-02-07 129.2116   -0.013619     -0.025762       1.475090   -0.418589
+2025-08-08 129.2392    0.000696     -0.019727       1.252414   -0.047502
+2025-11-07 129.2397    0.000232     -0.000387       4.400823   -0.005214
+Saved C:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H1_weekly.csv
+public_debt.csv: 604 rows read, 0 dropped (unparseable dates)
+Debt types: ['Domestic Debt', 'External Debt']
+Total public debt: 1999-09-01 -> 2025-04-01, stamp day-of-month most common: {1: 302}
+Total public debt: missing months since 2017-01: 0  []
+Domestic debt: 1999-09-01 -> 2025-04-01, stamp day-of-month most common: {1: 302}
+Domestic debt: missing months since 2017-01: 0  []
+
+==================== H5 monthly ====================
+  rows with missing flow_ratio: 0
+  rows with missing dg_total_lag2: 12
+  rows with missing nse20_ret_pct: 0
+FINAL: 92 rows, 2017-09-30 -> 2025-04-30
+Gaps between consecutive rows > 35 days: 0
+Split check: part 1 = 46 rows, part 2 = 46 rows (part 2 starts 2021-07-31)
+Rows per year: {2017: 4, 2018: 12, 2019: 12, 2020: 12, 2021: 12, 2022: 12, 2023: 12, 2024: 12, 2025: 4}
+SPOT CHECK H5 monthly: 5 random rows (verify by hand against the raw files)
+period_end      debt_t3      debt_t2  dg_total_lag2  dg_dom_lag2  nse20_ret_pct  flow_ratio
+2021-01-31 7.163289e+12 7.254462e+12       1.272784     0.723294       0.723618   -0.258109
+2019-07-31 5.583387e+12 5.607458e+12       0.431120     1.156846      -0.209242   -0.149937
+2022-04-30 8.284492e+12 8.337209e+12       0.636332     1.734742      -2.496291   -0.141314
+2023-09-30 1.027867e+13 1.041617e+13       1.337650     0.857084      -2.039399   -0.227047
+2017-09-30 4.405863e+12 4.429327e+12       0.532551     0.571961      -6.845090   -0.214559
+Saved C:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H5_monthly.csv
+Weekly bank base: 460 weeks; weekday of period_end: {4: 460} (4 = Friday)
+liquidity_merged.csv: 9404 rows read, 0 dropped (unparseable dates)
+Liquidity indicators found: ['Daily Average Interbank Rate', 'Daily Volumes (KES Mn)', 'Lower Corridor Limit', 'Upper Corridor Limit']
+Indicators per date: {4: 2351} (expect 4 everywhere; fewer = truncated chunk)
+Interbank rate: 2017-01-03 -> 2026-06-25; weekly averages 495, obs per week min 2 median 5
+
+==================== H4 weekly ====================
+  rows with missing dlog_adtv: 1
+  rows with missing dib_lag1: 0
+  rows with missing nse20_ret_pct: 0
+FINAL: 459 rows, 2017-09-15 -> 2026-06-26
+Gaps between consecutive rows > 10 days: 0
+Split check: part 1 = 230 rows, part 2 = 229 rows (part 2 starts 2022-02-11)
+Rows per year: {2017: 16, 2018: 52, 2019: 52, 2020: 52, 2021: 53, 2022: 52, 2023: 52, 2024: 52, 2025: 52, 2026: 26}
+SPOT CHECK H4 weekly: 5 random rows (verify by hand against the raw files)
+period_end  n_trading_days     adtv_kes  dlog_adtv  ib_t1  ib_t2  dib_lag1  nse20_ret_pct
+2020-01-31               5 232662613.00   0.025915 3.8725  3.800    0.0725      -1.592810
+2018-04-13               5 334342700.00   0.277401 6.3000  5.865    0.4350      -0.407767
+2021-07-09               5 133206674.40  -0.033183 4.8900  4.800    0.0900       1.192168
+2026-02-06               5 379789367.86   0.103198 8.9880  8.986    0.0020       1.462440
+2020-08-28               5 140447847.80  -0.318149 2.5940  1.948    0.6460       4.048818
+Saved C:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H4_weekly.csv

@@ -12,6 +12,16 @@ Why a custom loader (pd.read_csv would silently corrupt this file):
   3. Sunday rows copy the next Monday's volume, so summing every row double counts.
   4. Public-holiday weekdays (no prices at all) also carry a copy of the next trading day's volume.
   5. A few single-day price glitches exist (e.g. NCBA on 19 Mar 2020 shows KES 2,825).
+  6. (Phase 3 patch, change-log item 7) Some volume values are corrupt or stale, which makes
+     turnover (= price x volume) wrong and breaks the flow ratio. Net foreign flow is buys minus
+     sells, so |net flow| can never exceed turnover. Three PATTERN RULES flag a bank-day to be
+     excluded from every flow numerator and denominator and from traded value (prices are kept):
+       a. volume equals price          (column mix-up at the source, e.g. all banks on 2024-04-30)
+       b. same non-zero volume on 3+ consecutive trading days (stale field, e.g. 26 Jul - 2 Aug 2019)
+       c. zero volume but a non-zero net flow
+     Bank-days where |net flow| > turnover but the volume looks plausible ("Type C") are NOT
+     excluded; they are flagged (flag_flow_gt_turnover) and a capped copy of the flow is written
+     (net_flow_capped_kes = flow clipped to +/- turnover) for the capped sensitivity run.
 """
 import re
 import sys
@@ -21,8 +31,11 @@ import numpy as np
 import pandas as pd
 
 RAW = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent / "data/raw/Equity prices data.csv"
-OUT = Path("C:/Users/KIRONJI/Desktop/Rock research project/data/clean")
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "data/clean"
+AUDIT = ROOT / "outputs"
 START = "2017-09-01"   # start of the analysis window
+MIN_STALE_RUN = 3      # rule b: identical non-zero volume on this many consecutive trading days
 SPIKE = 0.10           # a one-day move above 10% that fully reverses next day is a glitch
 REVIEW = 0.15          # any other one-day move above 15% is kept but listed for review
 
@@ -88,6 +101,22 @@ def remove_spikes(s):
     return s, removed, review
 
 
+def add_integrity_flags(df):
+    """Add the flow-integrity columns (see docstring item 6). Rows must be one per bank per
+    trading day; consecutive rows of a bank are consecutive trading days (holidays already dropped)."""
+    df = df.sort_values(["bank", "date"]).copy()
+    vol, px, flow, tv = df["volume"], df["price"], df["net_flow_kes"], df["turnover_kes"]
+    df["flag_vol_eq_price"] = (vol > 0) & np.isclose(vol, px)
+    run_id = df.groupby("bank")["volume"].transform(lambda s: (s != s.shift()).cumsum())
+    run_len = df.groupby(["bank", run_id])["volume"].transform("size")
+    df["flag_stale_vol"] = (vol > 0) & (run_len >= MIN_STALE_RUN)
+    df["flag_zero_vol_flow"] = (vol == 0) & flow.notna() & (flow != 0)
+    df["flow_exclude"] = df[["flag_vol_eq_price", "flag_stale_vol", "flag_zero_vol_flow"]].any(axis=1)
+    df["flag_flow_gt_turnover"] = (flow.abs() > tv) & ~df["flow_exclude"]
+    df["net_flow_capped_kes"] = np.where(tv.notna(), np.clip(flow, -tv, tv), flow)
+    return df
+
+
 def main():
     recs, problems = read_raw(RAW)
     df = pd.DataFrame(recs)
@@ -148,10 +177,19 @@ def main():
         for d, b, pc in zip(df.date, df.bank, df.price_clean)]
     df["no_price_day"] = df["price_clean"].isna()
 
+    df = add_integrity_flags(df)
     cols = ["date", "bank", "price", "price_clean", "volume", "net_flow_kes",
-            "turnover_kes", "chg_pct_reported", "flow_decode_flag", "no_price_day"]
+            "turnover_kes", "chg_pct_reported", "flow_decode_flag", "no_price_day",
+            "flag_vol_eq_price", "flag_stale_vol", "flag_zero_vol_flow", "flow_exclude",
+            "flag_flow_gt_turnover", "net_flow_capped_kes"]
     OUT.mkdir(parents=True, exist_ok=True)
     df[cols].to_csv(OUT / "equities_daily.csv", index=False)
+    AUDIT.mkdir(parents=True, exist_ok=True)
+    ex = df[df.flow_exclude].copy()
+    ex["reason"] = ex[["flag_vol_eq_price", "flag_stale_vol", "flag_zero_vol_flow"]].apply(
+        lambda r: "+".join(n.replace("flag_", "") for n, v in r.items() if v), axis=1)
+    ex[["date", "bank", "reason", "price", "volume", "net_flow_kes", "turnover_kes"]].sort_values(
+        ["date", "bank"]).to_csv(AUDIT / "flow_exclusions.csv", index=False)
 
     # ---- audit printout ----
     print(f"Read {len(recs):,} rows from {RAW.name} ({len(problems)} unparseable lines, "
@@ -167,7 +205,11 @@ def main():
     for b in px.columns:
         print(f"  {b:7s} spikes removed: {[str(d.date()) for d in removed[b]]} | "
               f"big moves kept for review: {[str(d.date()) for d in review[b]]}")
-    print(f"Saved: {OUT / 'equities_daily.csv'}")
+    print(f"Flow integrity: {int(df.flow_exclude.sum())} bank-days excluded from flows "
+          f"(volume=price {int(df.flag_vol_eq_price.sum())}, stale volume {int(df.flag_stale_vol.sum())}, "
+          f"zero volume with flow {int(df.flag_zero_vol_flow.sum())}); "
+          f"{int(df.flag_flow_gt_turnover.sum())} further bank-days have |flow| > turnover (kept, capped copy written)")
+    print(f"Saved: {OUT / 'equities_daily.csv'} and {AUDIT / 'flow_exclusions.csv'}")
 
 
 if __name__ == "__main__":
