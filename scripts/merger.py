@@ -21,18 +21,19 @@ for f in files:
     frames.append(df)
 
 all_df = pd.concat(frames, ignore_index=True)
+key_cols = [DATE_COL, "Indicator"] if "Indicator" in all_df.columns else [DATE_COL]
 
 # 1) do overlapping rows agree?
 num_cols = [c for c in all_df.select_dtypes("number").columns]
-dups = all_df[all_df.duplicated(DATE_COL, keep=False)].sort_values(DATE_COL)
+dups = all_df[all_df.duplicated(key_cols, keep=False)].sort_values(key_cols)
 if len(dups):
-    spread = dups.groupby(DATE_COL)[num_cols].agg(lambda s: s.max() - s.min()).fillna(0)
+    spread = dups.groupby(key_cols)[num_cols].agg(lambda s: s.max() - s.min()).fillna(0)
     bad = spread[(spread.abs() > 1e-9).any(axis=1)]
-    print(f"\nOverlapping dates: {dups[DATE_COL].nunique()}, with conflicting values: {len(bad)}")
+    print(f"\nOverlapping date/indicator rows: {len(dups)}, with conflicting values: {len(bad)}")
     if len(bad): print(bad.head(10))
 
-# 2) keep the most recent download for each date
-merged = (all_df.drop_duplicates(DATE_COL, keep="last")
+# 2) keep the most recent download for each date and indicator
+merged = (all_df.drop_duplicates(key_cols, keep="last")
                 .sort_values(DATE_COL).reset_index(drop=True)
                 .drop(columns="source_file"))
 
