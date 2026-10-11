@@ -1,0 +1,325 @@
+PHASE 3 (steps 1-4): pre-flight, plots, outliers, big flow weeks, stationarity
+
+--- H1_weekly ---
+rows=174  range=2023-03-03 -> 2026-06-26
+duplicate dates=0   gaps > 10 days=0
+weekday of period_end (4=Fri): {4: 174}
+blank cells: none
+split_part counts: {1: 47, 2: 127}
+recompute nse20_ret_pct from prices: PASS
+dfx_lag1_pct equals previous row's fx_chg_pct: PASS
+share of weeks with EXACTLY zero lagged FX change: 2.9%
+weeks with |lagged FX change| > 0.2%: 83
+flow_ratio within [-1, 1]: PASS
+flow_ratio_eqw within [-1, 1]: PASS
+flow_ratio_capped within [-1, 1]: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+
+--- H1_monthly ---
+rows=39  range=2023-04-30 -> 2026-06-30
+duplicate dates=0   gaps > 35 days=0
+blank cells: none
+split_part counts: {1: 20, 2: 19}
+recompute nse20_ret_pct from prices: PASS
+dfx_lag1_pct equals previous row's fx_chg_pct: PASS
+share of weeks with EXACTLY zero lagged FX change: 0.0%
+weeks with |lagged FX change| > 0.2%: 24
+flow_ratio within [-1, 1]: PASS
+flow_ratio_eqw within [-1, 1]: PASS
+flow_ratio_capped within [-1, 1]: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+
+--- H2_weekly ---
+rows=457  range=2017-09-08 -> 2026-06-26
+duplicate dates=0   gaps > 10 days=3
+weekday of period_end (4=Fri): {4: 457}
+blank cells: {'y364_t1': 1, 'y364_t2': 1, 'dspread91m364_lag1': 2}
+split_part counts: {1: 229, 2: 228}
+recompute nse20_ret_pct from prices: PASS
+recompute dy91_lag1 = y91_t1 - y91_t2 (t1 = latest known Monday, t2 = the one before): PASS
+  (lag timing is checked by eye below: y91 window dates vs week_monday)
+recompute dspread91m364_lag1 = change in (91-day minus 364-day): PASS (2 blank rows, from the masked source fault)
+flow_ratio within [-1, 1]: PASS
+flow_ratio_eqw within [-1, 1]: PASS
+flow_ratio_capped within [-1, 1]: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+lag-window rows to verify by hand against the raw file:
+period_end week_monday  y91_t1  y91_t2  dy91_lag1
+2017-09-08  2017-09-04    8.15    8.20      -0.05
+2022-02-11  2022-02-07    7.34    7.33       0.01
+2026-06-26  2026-06-22    8.71    8.56       0.15
+
+--- H3_monthly ---
+rows=106  range=2017-09-30 -> 2026-06-30
+duplicate dates=0   gaps > 35 days=0
+blank cells: none
+split_part counts: {1: 53, 2: 53}
+recompute nse20_ret_pct from prices: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+recompute dinfl_head_lag1 = t1 - t2: PASS
+lag-window rows to verify by hand against the raw file:
+period_end  infl_head_t1  infl_head_t2
+2017-09-30          8.04          7.47
+2022-02-28          5.39          5.73
+2026-06-30          6.70          5.60
+
+--- H4_weekly ---
+rows=453  range=2017-09-15 -> 2026-06-26
+duplicate dates=0   gaps > 10 days=3
+weekday of period_end (4=Fri): {4: 453}
+blank cells: none
+split_part counts: {1: 227, 2: 226}
+recompute nse20_ret_pct from prices: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+lag-window rows to verify by hand against the raw file:
+period_end week_monday  ib_t1  ib_t2
+2017-09-15  2017-09-11  5.412  5.148
+2022-02-25  2022-02-21  4.552  4.454
+2026-06-26  2026-06-22  8.750  8.750
+
+--- H4_monthly ---
+rows=105  range=2017-10-31 -> 2026-06-30
+duplicate dates=0   gaps > 35 days=0
+blank cells: none
+split_part counts: {1: 53, 2: 52}
+recompute nse20_ret_pct from prices: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+lag-window rows to verify by hand against the raw file:
+period_end    ib_t1    ib_t2
+2017-10-31 5.650952 7.681364
+2022-02-28 4.361905 5.096667
+2026-06-30 8.748947 8.752500
+
+--- H5_monthly ---
+rows=92  range=2017-09-30 -> 2025-04-30
+duplicate dates=0   gaps > 35 days=0
+blank cells: none
+split_part counts: {1: 46, 2: 46}
+recompute nse20_ret_pct from prices: PASS
+recompute dg_total_lag3 = debt_t3/debt_t4 - 1 (t3 = value 3 months before the outcome month): PASS
+flow_ratio within [-1, 1]: PASS
+flow_ratio_eqw within [-1, 1]: PASS
+flow_ratio_capped within [-1, 1]: PASS
+drop-one-bank columns present (5): PASS; blanks in them: 0
+lag-window rows to verify by hand against the raw file:
+period_end      debt_t4      debt_t3
+2017-09-30 4.232696e+12 4.405863e+12
+2021-07-31 7.339707e+12 7.411046e+12
+2025-04-30 1.092528e+13 1.101121e+13
+
+OUTLIERS (robust z > 4): decide for each: real event or data problem?
+     panel           variable period_end      value  robust_z
+ H1_weekly       dfx_lag1_pct 2023-03-17   1.053832       4.1
+ H1_weekly       dfx_lag1_pct 2023-03-31   1.071046       4.2
+ H1_weekly       dfx_lag1_pct 2024-01-19   1.236849       4.9
+ H1_weekly       dfx_lag1_pct 2024-02-23  -8.891754     -35.4
+ H1_weekly       dfx_lag1_pct 2024-03-01  -1.230948      -4.9
+ H1_weekly       dfx_lag1_pct 2024-03-22  -5.360105     -21.3
+ H1_weekly       dfx_lag1_pct 2024-03-29  -1.646207      -6.6
+ H1_weekly       dfx_lag1_pct 2024-05-03   1.547370       6.1
+ H1_weekly       dfx_lag1_pct 2024-05-17  -1.375969      -5.5
+ H1_weekly       dfx_lag1_pct 2024-06-07  -1.133336      -4.6
+ H1_weekly       dfx_lag1_pct 2024-06-21  -1.064722      -4.3
+ H1_weekly       dfx_lag1_pct 2024-08-02   1.611597       6.3
+ H1_weekly       dfx_lag1_pct 2024-08-09  -1.978887      -7.9
+ H1_weekly      nse20_ret_pct 2026-02-13   8.531664       4.1
+H1_monthly       dfx_lag1_pct 2023-04-30   4.133636       6.4
+H1_monthly       dfx_lag1_pct 2023-05-31   2.704855       4.2
+H1_monthly       dfx_lag1_pct 2024-02-29   2.691008       4.2
+H1_monthly       dfx_lag1_pct 2024-03-31 -10.676396     -16.8
+H1_monthly       dfx_lag1_pct 2024-04-30  -8.164609     -12.8
+ H2_weekly          dy91_lag1 2019-04-05   0.860000      19.3
+ H2_weekly          dy91_lag1 2019-04-12  -0.200000      -4.5
+ H2_weekly          dy91_lag1 2019-11-01   0.880000      19.8
+ H2_weekly          dy91_lag1 2019-11-08  -0.830000     -18.7
+ H2_weekly          dy91_lag1 2019-11-29   0.290000       6.5
+ H2_weekly          dy91_lag1 2019-12-06   0.450000      10.1
+ H2_weekly          dy91_lag1 2020-07-10  -0.390000      -8.8
+ H2_weekly          dy91_lag1 2020-07-24  -0.280000      -6.3
+ H2_weekly          dy91_lag1 2020-07-31  -0.260000      -5.8
+ H2_weekly          dy91_lag1 2023-06-09   0.310000       7.0
+ H2_weekly          dy91_lag1 2023-06-16   0.270000       6.1
+ H2_weekly          dy91_lag1 2023-06-23   0.310000       7.0
+ H2_weekly          dy91_lag1 2023-06-30   0.230000       5.2
+ H2_weekly          dy91_lag1 2023-08-18   0.330000       7.4
+ H2_weekly          dy91_lag1 2023-08-25   0.420000       9.4
+ H2_weekly          dy91_lag1 2023-09-01   0.370000       8.3
+ H2_weekly          dy91_lag1 2023-09-08   0.250000       5.6
+ H2_weekly          dy91_lag1 2023-09-15   0.260000       5.8
+ H2_weekly          dy91_lag1 2023-09-22   0.240000       5.4
+ H2_weekly          dy91_lag1 2023-09-29   0.290000       6.5
+ H2_weekly          dy91_lag1 2023-10-06   0.270000       6.1
+ H2_weekly          dy91_lag1 2024-04-26  -0.990000     -22.3
+ H2_weekly          dy91_lag1 2024-10-25  -0.700000     -15.7
+ H2_weekly          dy91_lag1 2024-11-01  -0.220000      -4.9
+ H2_weekly          dy91_lag1 2024-11-08  -0.340000      -7.6
+ H2_weekly          dy91_lag1 2024-11-15  -0.460000     -10.3
+ H2_weekly          dy91_lag1 2024-11-22  -0.520000     -11.7
+ H2_weekly          dy91_lag1 2024-11-29  -0.660000     -14.8
+ H2_weekly          dy91_lag1 2024-12-06  -0.760000     -17.1
+ H2_weekly          dy91_lag1 2024-12-13  -0.780000     -17.5
+ H2_weekly          dy91_lag1 2024-12-20  -0.790000     -17.8
+ H2_weekly          dy91_lag1 2024-12-27  -0.430000      -9.7
+ H2_weekly          dy91_lag1 2025-01-24  -0.240000      -5.4
+ H2_weekly          dy91_lag1 2025-02-21  -0.400000      -9.0
+ H2_weekly          dy91_lag1 2026-05-08   0.360000       8.1
+ H2_weekly          dy91_lag1 2026-05-15   0.260000       5.8
+ H2_weekly dspread91m364_lag1 2019-04-05   0.890000      15.0
+ H2_weekly dspread91m364_lag1 2019-11-01   0.880000      14.8
+ H2_weekly dspread91m364_lag1 2019-11-08  -0.810000     -13.7
+ H2_weekly dspread91m364_lag1 2019-11-29   0.300000       5.1
+ H2_weekly dspread91m364_lag1 2019-12-06   0.430000       7.3
+ H2_weekly dspread91m364_lag1 2020-03-13   0.300000       5.1
+ H2_weekly dspread91m364_lag1 2020-07-17   0.270000       4.6
+ H2_weekly dspread91m364_lag1 2021-06-25   0.280000       4.7
+ H2_weekly dspread91m364_lag1 2021-07-02   0.440000       7.4
+ H2_weekly dspread91m364_lag1 2021-07-09   0.240000       4.0
+ H2_weekly dspread91m364_lag1 2021-09-24  -0.250000      -4.2
+ H2_weekly dspread91m364_lag1 2023-06-09   0.240000       4.0
+ H2_weekly dspread91m364_lag1 2023-09-15   0.510000       8.6
+ H2_weekly dspread91m364_lag1 2023-09-22  -0.860000     -14.5
+ H2_weekly dspread91m364_lag1 2023-09-29   0.420000       7.1
+ H2_weekly dspread91m364_lag1 2024-04-26  -0.530000      -8.9
+ H2_weekly dspread91m364_lag1 2024-10-25  -0.320000      -5.4
+ H2_weekly dspread91m364_lag1 2024-12-20  -0.270000      -4.6
+ H2_weekly dspread91m364_lag1 2026-05-08   0.360000       6.1
+ H2_weekly      nse20_ret_pct 2019-11-01   9.791361       6.0
+ H2_weekly      nse20_ret_pct 2020-03-13 -11.488153      -6.9
+ H2_weekly      nse20_ret_pct 2026-02-13   8.531664       5.3
+H3_monthly           bank_ret 2019-10-31   0.288710       4.7
+H3_monthly    dinfl_head_lag1 2019-05-31   2.230000       5.1
+H3_monthly    dinfl_core_lag1 2019-10-31  -1.350000      -4.6
+H3_monthly    dinfl_core_lag1 2024-02-29   1.400000       4.7
+H3_monthly      nse20_ret_pct 2020-03-31 -15.870999      -4.6
+H3_monthly      nse20_ret_pct 2024-03-31  14.098666       4.3
+H3_monthly      nse20_ret_pct 2026-02-28  13.674802       4.2
+ H4_weekly           dib_lag1 2017-10-06   2.336000       5.7
+ H4_weekly           dib_lag1 2018-07-06   1.866000       4.6
+ H4_weekly           dib_lag1 2018-07-20  -2.000000      -4.9
+ H4_weekly           dib_lag1 2018-08-03   1.784000       4.4
+ H4_weekly           dib_lag1 2018-08-10   3.076000       7.5
+ H4_weekly           dib_lag1 2018-08-24  -1.884000      -4.6
+ H4_weekly           dib_lag1 2018-12-21   2.734000       6.7
+ H4_weekly           dib_lag1 2018-12-28  -2.456000      -6.0
+ H4_weekly           dib_lag1 2019-01-18  -1.992500      -4.9
+ H4_weekly           dib_lag1 2019-02-15  -2.040000      -5.0
+ H4_weekly           dib_lag1 2019-03-08   2.306000       5.6
+ H4_weekly           dib_lag1 2019-04-26   2.126500       5.2
+ H4_weekly           dib_lag1 2021-10-01   1.904000       4.7
+ H4_weekly           dib_lag1 2021-10-22  -1.728500      -4.2
+ H4_weekly           dib_lag1 2023-08-04   4.156000      10.2
+ H4_weekly           dib_lag1 2023-08-11   3.458000       8.5
+ H4_weekly           dib_lag1 2023-08-18  -5.430000     -13.3
+ H4_weekly           dib_lag1 2024-01-05   1.679333       4.1
+ H4_weekly      nse20_ret_pct 2019-11-01   9.791361       6.0
+ H4_weekly      nse20_ret_pct 2020-03-13 -11.488153      -6.9
+ H4_weekly      nse20_ret_pct 2026-02-13   8.531664       5.2
+H4_monthly           dib_lag1 2019-01-31   3.907475       5.9
+H4_monthly           dib_lag1 2019-02-28  -4.486111      -6.5
+H4_monthly           dib_lag1 2019-10-31   2.950000       4.4
+H4_monthly           dib_lag1 2019-12-31  -2.817500      -4.0
+H4_monthly      nse20_ret_pct 2020-03-31 -15.870999      -4.6
+H4_monthly      nse20_ret_pct 2024-03-31  14.098666       4.3
+H4_monthly      nse20_ret_pct 2026-02-28  13.674802       4.2
+H5_monthly      dg_total_lag3 2017-09-30   4.091186       5.0
+H5_monthly      dg_total_lag3 2018-05-31   5.977971       8.0
+H5_monthly      dg_total_lag3 2019-09-30   3.587452       4.2
+H5_monthly      dg_total_lag3 2023-09-30   6.109998       8.2
+H5_monthly      dg_total_lag3 2024-05-31  -3.436747      -6.8
+H5_monthly      dg_total_lag3 2024-06-30  -4.196507      -8.0
+H5_monthly      dg_total_lag2 2018-04-30   5.977971       8.2
+H5_monthly      dg_total_lag2 2019-08-31   3.587452       4.3
+H5_monthly      dg_total_lag2 2023-08-31   6.109998       8.4
+H5_monthly      dg_total_lag2 2024-04-30  -3.436747      -7.0
+H5_monthly      dg_total_lag2 2024-05-31  -4.196507      -8.2
+H5_monthly        dg_dom_lag3 2023-09-30   6.208516       6.2
+H5_monthly      nse20_ret_pct 2020-03-31 -15.870999      -5.1
+H5_monthly      nse20_ret_pct 2024-03-31  14.098666       4.9
+
+FLOW INTEGRITY: 36 bank-days excluded (volume=price 5, stale volume 30, zero volume with flow 1)
+excluded days by date: {datetime.date(2018, 11, 28): 1, datetime.date(2019, 7, 26): 5, datetime.date(2019, 7, 29): 5, datetime.date(2019, 7, 30): 5, datetime.date(2019, 7, 31): 5, datetime.date(2019, 8, 1): 5, datetime.date(2019, 8, 2): 5, datetime.date(2024, 4, 30): 5}
+TYPE C (|flow| > turnover, volume plausible; KEPT in primary, capped in the sensitivity): 16 bank-days
+      date   bank  price   volume  net_flow_kes  turnover_kes
+2017-09-29   Absa  10.10  16400.0      228000.0      165640.0
+2018-01-02   Absa   9.55  67300.0     -879140.0      642715.0
+2019-10-17   Absa  11.35 139500.0    -4481137.5     1583325.0
+2018-07-03  Co-op  17.05 243900.0    -6073057.5     4158495.0
+2018-05-22 Equity  49.25 569700.0    46093125.0    28057725.0
+2018-05-25 Equity  48.75 103300.0   -44384612.5     5035875.0
+2018-07-06 Equity  48.75  38000.0   -18414337.5     1852500.0
+2022-11-25 Equity  45.95  25500.0     7662900.0     1171725.0
+2018-02-23    KCB  46.00 475300.0   -69260100.0    21863800.0
+2018-07-06    KCB  48.75 659600.0   -60423600.0    32155500.0
+2019-01-08    KCB  36.90  69100.0    -7904742.5     2549790.0
+2020-02-20    KCB  50.00 665700.0   -63832350.0    33285000.0
+2020-02-24    KCB  49.00 163680.0   -32489095.0     8020320.0
+2018-07-03   NCBA  35.50  44700.0    -1740025.0     1586850.0
+2020-10-16   NCBA  22.85   5600.0     -414000.0      127960.0
+2023-01-25   NCBA  37.00  18600.0    -1803671.0      688200.0
+
+TOP-5 BIGGEST FLOW WEEKS (absolute net flow, KES million); research each one:
+  bank week_ending  net_flow_kes_m  flow_ratio
+  Absa  2025-09-19          -325.9      -0.700
+  Absa  2025-05-30          -263.3      -0.917
+  Absa  2026-02-13          -190.4      -0.591
+  Absa  2026-05-22          -155.6      -0.703
+  Absa  2026-01-16          -149.3      -0.769
+ Co-op  2023-10-06          -117.7      -0.935
+ Co-op  2018-01-26          -107.7      -0.453
+ Co-op  2017-09-08          -107.5      -0.335
+ Co-op  2023-09-22           -72.4      -0.926
+ Co-op  2026-02-20           -57.2      -0.230
+Equity  2026-03-13         -1009.6      -0.653
+Equity  2025-09-19          -943.5      -0.553
+Equity  2026-06-26           600.4       0.167
+Equity  2023-08-11           571.5       0.823
+Equity  2022-10-28          -511.1      -0.619
+   KCB  2026-05-29           935.1       0.448
+   KCB  2024-04-26           553.4       0.883
+   KCB  2021-02-05          -545.4      -0.797
+   KCB  2025-09-19          -532.4      -0.543
+   KCB  2021-01-22          -435.9      -0.688
+  NCBA  2026-02-13           -49.1      -0.086
+  NCBA  2026-01-09            39.0       0.442
+  NCBA  2024-05-31            20.7       0.365
+  NCBA  2026-02-20           -20.3      -0.105
+  NCBA  2026-04-17            17.7       0.470
+SECTOR  2025-09-19         -1802.1      -0.555
+SECTOR  2026-05-29          1383.1       0.398
+SECTOR  2026-03-13         -1318.8      -0.445
+SECTOR  2021-12-10          -792.2      -0.420
+SECTOR  2020-05-15          -710.3      -0.391
+
+STATIONARITY TABLE (ADF p<0.05 = stationary; KPSS p>=0.05 = stationary):
+     panel           variable   n  adf_stat  adf_p  adf_lags  kpss_p                 call
+ H1_weekly         flow_ratio 174     -6.19 0.0000         1   0.100           stationary
+ H1_weekly     flow_ratio_eqw 174     -5.99 0.0000         1   0.100           stationary
+ H1_weekly  flow_ratio_capped 174     -6.19 0.0000         1   0.100           stationary
+ H1_weekly       dfx_lag1_pct 174     -4.17 0.0008         4   0.100           stationary
+ H1_weekly      nse20_ret_pct 174    -10.80 0.0000         0   0.062           stationary
+H1_monthly         flow_ratio  39     -4.82 0.0000         0   0.100           stationary
+H1_monthly       dfx_lag1_pct  39     -4.25 0.0005         0   0.100           stationary
+H1_monthly      nse20_ret_pct  39     -6.07 0.0000         0   0.074           stationary
+ H2_weekly         flow_ratio 457     -7.69 0.0000         2   0.100           stationary
+ H2_weekly     flow_ratio_eqw 457     -5.42 0.0000         4   0.034 unclear (low power?)
+ H2_weekly  flow_ratio_capped 457     -7.70 0.0000         2   0.100           stationary
+ H2_weekly          dy91_lag1 457     -5.02 0.0000         4   0.100           stationary
+ H2_weekly dspread91m364_lag1 455     -7.94 0.0000         4   0.100           stationary
+ H2_weekly      nse20_ret_pct 457    -17.49 0.0000         0   0.010 unclear (low power?)
+H3_monthly           bank_ret 106     -5.16 0.0000         4   0.077           stationary
+H3_monthly    dinfl_head_lag1 106     -3.18 0.0209         6   0.100           stationary
+H3_monthly    dinfl_core_lag1 106     -7.84 0.0000         0   0.100           stationary
+H3_monthly      nse20_ret_pct 106     -8.15 0.0000         0   0.010 unclear (low power?)
+ H4_weekly          dlog_adtv 453    -11.93 0.0000         7   0.100           stationary
+ H4_weekly           dib_lag1 453    -11.69 0.0000         5   0.100           stationary
+ H4_weekly      nse20_ret_pct 453    -17.60 0.0000         0   0.010 unclear (low power?)
+H4_monthly          dlog_adtv 105     -7.00 0.0000         4   0.100           stationary
+H4_monthly           dib_lag1 105     -3.92 0.0019         4   0.100           stationary
+H4_monthly      nse20_ret_pct 105     -8.01 0.0000         0   0.010 unclear (low power?)
+H5_monthly         flow_ratio  92     -6.12 0.0000         0   0.100           stationary
+H5_monthly     flow_ratio_eqw  92     -5.13 0.0000         0   0.099           stationary
+H5_monthly  flow_ratio_capped  92     -6.11 0.0000         0   0.100           stationary
+H5_monthly      dg_total_lag3  92     -7.79 0.0000         0   0.100           stationary
+H5_monthly      dg_total_lag2  92     -7.42 0.0000         0   0.100           stationary
+H5_monthly        dg_dom_lag3  92    -10.37 0.0000         0   0.100           stationary
+H5_monthly      nse20_ret_pct  92     -7.60 0.0000         0   0.022 unclear (low power?)
