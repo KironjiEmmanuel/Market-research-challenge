@@ -24,7 +24,7 @@ period_end week_monday  y91_t1  y91_t2  dy91_lag1  dspread91m364_lag1  nse20_ret
 2024-04-12  2024-04-08   16.73   16.73       0.00                0.00      -1.329443    0.431319
 2021-12-03  2021-11-29    7.11    7.07       0.04               -0.06      -2.485753   -0.386640
 2020-09-18  2020-09-14    6.30    6.27       0.03               -0.01      -1.507712   -0.101723
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H2_weekly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H2_weekly.csv
 Monthly equal-weighted bank return: min -0.1889, max 0.2887, mean 0.0116 (decimal: 0.05 = 5%)
 head inflation data.csv: 132 rows read, 0 dropped (unparseable dates)
 core inflation data.csv: 131 rows read, 0 dropped (unparseable dates)
@@ -48,7 +48,7 @@ period_end  infl_head_t1  infl_head_t2  dinfl_head_lag1  dinfl_core_lag1  nse20_
 2018-01-31          4.50          4.73            -0.23              0.4       0.682392  0.081133
 2024-06-30          5.10          5.00             0.10             -0.9      -3.831082 -0.042440
 2025-10-31          4.60          4.50             0.10             -0.1       4.845861  0.111105
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H3_monthly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H3_monthly.csv
 Weekly bank base: 460 weeks; weekday of period_end: {4: 460} (4 = Friday); weeks with a blank flow ratio (< 3 usable days): 3
 exchange_rates.csv: 1000 rows read, 0 dropped (unparseable dates)
 FX weekday counts (0=Mon ... 6=Sun): {0: 174, 1: 175, 2: 174, 3: 171, 4: 145, 6: 161}  -> weekend rows are dropped
@@ -70,7 +70,7 @@ period_end   fx_end  fx_chg_pct  dfx_lag1_pct  nse20_ret_pct  flow_ratio
 2025-02-07 129.2116   -0.013619     -0.025762       1.475090   -0.418589
 2025-08-08 129.2392    0.000696     -0.019727       1.252414   -0.047502
 2025-11-07 129.2397    0.000232     -0.000387       4.400823   -0.005214
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H1_weekly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H1_weekly.csv
 exchange_rates.csv: 1000 rows read, 0 dropped (unparseable dates)
 
 ==================== H1 monthly ====================
@@ -89,7 +89,7 @@ period_end   fx_end  fx_chg_pct  dfx_lag1_pct  nse20_ret_pct  flow_ratio
 2023-08-31 145.5088    2.092453      1.425384      -2.351561    0.350298
 2024-05-31 130.2333   -2.285133      1.121695       1.863416    0.203634
 2025-10-31 129.2394   -0.000387     -0.040606       4.845861    0.211248
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H1_monthly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H1_monthly.csv
 public_debt.csv: 604 rows read, 0 dropped (unparseable dates)
 Debt types: ['Domestic Debt', 'External Debt']
 Total public debt: 1999-09-01 -> 2025-04-01, stamp day-of-month most common: {1: 302}
@@ -113,7 +113,7 @@ period_end      debt_t4      debt_t3  dg_total_lag3  dg_dom_lag3  nse20_ret_pct 
 2022-04-30 8.206740e+12 8.284492e+12       0.947420     1.928205      -2.496291   -0.141314
 2023-09-30 9.686809e+12 1.027867e+13       6.109998     6.208516      -2.039399   -0.227047
 2017-09-30 4.232696e+12 4.405863e+12       4.091186     3.238315      -6.845090   -0.214559
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H5_monthly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H5_monthly.csv
 liquidity_merged.csv: 9404 rows read, 0 dropped (unparseable dates)
 Liquidity indicators found: ['Daily Average Interbank Rate', 'Daily Volumes (KES Mn)', 'Lower Corridor Limit', 'Upper Corridor Limit']
 Indicators per date: {4: 2351} (expect 4 everywhere; fewer = truncated chunk)
@@ -135,7 +135,7 @@ period_end  n_adtv_days    adtv_kes  dlog_adtv  ib_t1   ib_t2  dib_lag1  nse20_r
 2024-09-27            5  49316651.0  -0.966696 12.690 12.6360    0.0540      -0.720971
 2024-09-06            5  43555756.0  -0.888674 12.878 12.9160   -0.0380       1.737566
 2020-10-09            5  70016834.0   0.135813  3.540  3.2680    0.2720      -0.843875
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H4_weekly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H4_weekly.csv
 liquidity_merged.csv: 9404 rows read, 0 dropped (unparseable dates)
 Liquidity indicators found: ['Daily Average Interbank Rate', 'Daily Volumes (KES Mn)', 'Lower Corridor Limit', 'Upper Corridor Limit']
 Indicators per date: {4: 2351} (expect 4 everywhere; fewer = truncated chunk)
@@ -156,4 +156,4 @@ period_end  n_adtv_days     adtv_kes  dlog_adtv    ib_t1    ib_t2  dib_lag1  nse
 2023-02-28           20 7.423442e+07  -0.300844 5.952381 5.616316  0.336065      -0.649241
 2022-03-31           23 1.333572e+08  -0.195876 4.743500 4.361905  0.381595      -2.120578
 2021-07-31           21 1.015732e+08  -0.895303 4.603810 4.622500 -0.018690       2.425903
-Saved c:/Users/KIRONJI/Desktop/Rock research project/data/clean\panel_H4_monthly.csv
+Saved C:\Users\KIRONJI\Desktop\Rock research project\data\clean\panel_H4_monthly.csv

@@ -26,8 +26,8 @@ import pandas as pd
 
 # ======================== PATHS AND COLUMNS (relative to the repo root) ========================
 ROOT = Path(__file__).resolve().parent.parent
-RAW = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw'
-CLEAN = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean'
+RAW = ROOT / "data/raw"
+CLEAN = ROOT / "data/clean"
 
 
 def find(folder, *names):
@@ -38,16 +38,16 @@ def find(folder, *names):
     return str(folder / names[0])
 
 
-BANK_FLOWS_W  = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean/bank_flows_weekly.csv'
-BANK_FLOWS_M  = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean/bank_flows_monthly.csv'
-BANK_RET_M    = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean/bank_returns_monthly.csv'
-TBILLS        = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/treasury_bills.csv'
-NSE20         = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/nse_20_index.csv'
-FX            = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/exchange_rates.csv'
-INFL_HEAD     = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/head inflation data.csv'
-INFL_CORE     = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/core inflation data.csv'
-DEBT          = 'c:/Users/KIRONJI/Desktop/Rock research project/data/raw/public_debt.csv'
-LIQUIDITY     = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean/liquidity_merged.csv'      # LONG format: Date, Indicator, Value (H4 only)
+BANK_FLOWS_W  = find(CLEAN, "bank_flows_weekly.csv")
+BANK_FLOWS_M  = find(CLEAN, "bank_flows_monthly.csv")
+BANK_RET_M    = find(CLEAN, "bank_returns_monthly.csv")
+TBILLS        = find(RAW, "treasury_bills.csv")
+NSE20         = find(RAW, "nse_20_index.csv", "nse 20 index.csv")
+FX            = find(RAW, "exchange_rates.csv")
+INFL_HEAD     = find(RAW, "head inflation data.csv")
+INFL_CORE     = find(RAW, "core inflation data.csv")
+DEBT          = find(RAW, "public_debt.csv")
+LIQUIDITY     = find(CLEAN, "liquidity_merged.csv")      # LONG format: Date, Indicator, Value (H4 only)
 LIQ_RATE_NAME = "Daily Average Interbank Rate"
 OUT_DIR       = str(CLEAN)
 LOG           = str(ROOT / "outputs/panels_build_log.txt")

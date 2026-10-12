@@ -23,8 +23,8 @@ from statsmodels.tsa.stattools import adfuller, kpss
 # ============================ PATHS (repo-relative; run from repo root) ============================
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
-CLEAN = 'c:/Users/KIRONJI/Desktop/Rock research project/data/clean'
-OUT = 'c:/Users/KIRONJI/Desktop/Rock research project/outputs/phase3'
+CLEAN = str(ROOT / "data/clean")
+OUT = str(ROOT / "outputs/phase3")
 BANKS = ["Absa", "Co-op", "Equity", "KCB", "NCBA"]
 
 # model variables per panel (the series that actually enter a regression)
