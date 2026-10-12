@@ -30,9 +30,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-RAW = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent / "data/raw/Equity prices data.csv"
+RAW = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent / "C:/Users/KIRONJI/Desktop/Rock research project/data/raw"
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "data/clean"
+OUT = Path(__file__).resolve().parent.parent / "C:/Users/KIRONJI/Desktop/Rock research project/data/clean"
 AUDIT = ROOT / "outputs"
 START = "2017-09-01"   # start of the analysis window
 MIN_STALE_RUN = 3      # rule b: identical non-zero volume on this many consecutive trading days

@@ -37,7 +37,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
-CLEAN = ROOT / "data/clean"
+CLEAN = ROOT / "data" / "clean"
 MIN_BANKS = 3      # need at least 3 of 5 banks priced to publish an index return that day
 MIN_FLOW_DAYS = 3  # a weekly/monthly flow ratio or ADTV needs at least this many usable days (change-log item 7)
 TW_WINDOW = 60     # trading days for turnover weights
