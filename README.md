@@ -76,7 +76,3 @@ data/                     Rock Data Plus raw files
 Market data: Rock Data Plus. External values (CBK, KNBS, NSE, IEBC, news) are listed with
 links and as-of dates in `outputs/phase5/current_values.csv` and `event_calendar.csv`.
 
-## What I learned
-
-HAC errors, stationarity tests (ADF), Granger tests, and why freezing hypotheses before
-modelling keeps a null result honest.
